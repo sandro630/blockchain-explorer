@@ -1,5 +1,6 @@
 import 'babel-polyfill'
 import { Observable as O } from './rxjs'
+import axios from 'axios';
 
 import { getMempoolDepth, getConfEstimate, calcSegwitFeeGains } from './lib/fees'
 import getPrivacyAnalysis from './lib/privacy-analysis'
@@ -16,6 +17,25 @@ const apiBase = (process.env.API_URL || '/api').replace(/\/+$/, '')
     , setBase = ({ path, ...r }) => ({ ...r, url: path.includes('://') ? path : apiBase + path })
 
 const reservedPaths = [ 'mempool', 'assets' ]
+
+//added for BRTI from dev.btctimes.com
+let observable$ = O.create( ( observer ) => {
+  axios.get( 'https://dev.btctimes.com/backend/btc/price' )
+  .then( ( response ) => {
+      observer.next( response.data );
+      observer.complete();
+  } )
+  .catch( ( error ) => {
+      observer.error( error );
+  } );
+} );
+let subscription = observable$.subscribe( {
+  next: data => {
+    document.getElementsByClassName('btc-link')[0].innerHTML = 'BTC $' + data.mdEntries[0].mdEntryPx;
+    document.getElementsByClassName('btc-link')[1].innerHTML = 'BTC $' + data.mdEntries[0].mdEntryPx;
+  },
+  complete: data => console.log( '[complete]' ),
+} );
 
 // Temporary bug workaround. Listening with on('form.search', 'submit') was unable
 // to catch some form submissions.
@@ -394,6 +414,40 @@ export default function main({ DOM, HTTP, route, storage, scanner: scan$, search
       btn.classList.add('show-tooltip')
       setTimeout(_ => btn.classList.remove('show-tooltip'), 700)
     })
+
+    on('.fa-search', 'click').subscribe(({ ownerTarget: searchIcon}) => {
+      if (searchIcon.parentElement.classList.contains('js-open')) {
+        searchIcon.parentElement.classList.remove('js-open');
+      } else {
+        searchIcon.parentElement.classList.add('js-open');
+      }
+    })
+
+    on('.close', 'click').subscribe(({ ownerTarget: closeIcon}) => {
+      closeIcon.parentElement.classList.remove('open');
+    })
+
+    on('#sidenav-toggle', 'click').subscribe(({ ownerTarget: closeIcon}) => {
+      document.getElementsByClassName('ct-sidenav')[0].classList.add('open')
+    })
+
+    on('#mobileNewsLink', 'click').subscribe(({ ownerTarget: closeIcon}) => {
+      if (document.getElementsByClassName('dropdown-container')[0].classList.contains('open')) {
+        document.getElementsByClassName('dropdown-container')[0].classList.remove('open');
+      } else {
+        document.getElementsByClassName('dropdown-container')[0].classList.add('open');
+      }
+    })
+    
+    setInterval(() => {
+      let subscription = observable$.subscribe( {
+        next: data => {
+          document.getElementsByClassName('btc-link')[0].innerHTML = 'BTC $' + data.mdEntries[0].mdEntryPx;
+          document.getElementsByClassName('btc-link')[1].innerHTML = 'BTC $' + data.mdEntries[0].mdEntryPx;
+        },
+        complete: data => console.log( '[complete]' ),
+      } );
+    }, 10000);
   }
 
   return { DOM: vdom$, HTTP: req$, route: navto$, storage: store$, search: query$, scanner: scanning$, title: title$, state: state$ }
