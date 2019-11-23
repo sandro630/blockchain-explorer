@@ -1072,10 +1072,10 @@ body > .container, .navbar > .container, .jumbotron-fluid > .container, .content
   margin-right: 15px;
 }
 
-.footer-links {
+/* .footer-links {
   text-align: center;
   margin-top: -29px;
-}
+} */
 
 .language-selector, .language-submit {
   color: #FFF;
@@ -2513,6 +2513,114 @@ header .btc-link {
 
 /*************** ------------------- Footer style start--------------- ***************/
 
+footer {
+  padding: 48px 16px;
+  color: #fff;
+  background: #141414;
+  position: sticky;
+  top: 100%;
+  line-height: 1;
+}
+footer .footer {
+  margin: auto;
+  max-width: 1140px;
+  display: flex;
+}
+footer .footer .mb-20 {
+  margin-bottom: 20px;
+}
+.footer .intro-section {
+  flex: 1 0 32%;
+}
+.footer .common-section{
+  flex: 1 1 100%;
+  max-width: 25%;
+}
+footer img {
+  width: 25%;
+}
 
+footer .footer-home-link {
+  padding: 12px 0;
+}
+footer .footer-home-link a {
+  color: white;
+  text-decoration: none;
+  font-size: 34px;
+  font-family: 'Crimson Text', serif;
+}
+footer .copyright-text {
+  padding: 5px 0;
+  margin-bottom: 0;
+}
+footer .copyright-text span {
+  font-size: 11px;
+  padding-bottom: 10px;
+}
+footer .copyright-text a {
+  color: white;
+  text-decoration: none;
+  font-size: 10px;
+}
+footer .pb--20 {
+  padding-bottom: 20px;
+}
+footer .footer-links {
+  padding: 17px 0 20px 0;
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-bottom: 0px;
+}
+footer .footer-sub-links {
+  padding: 10px 0;
+  margin-bottom: 0px;
+}
+footer .footer-sub-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+}
+footer .social-links {
+  padding: 12px 0;
+}
+footer .social-links a {
+  padding-right: 12px;
+}
+footer .social-links i {
+  font-size: 18px;
+  color: white;
+  border: 1px solid white;
+  border-radius: 50%;
+  padding: 5px 5px;
+}
+footer .contact-section {
+  flex: 2 0 auto;
+}
+footer .social-links .fa-facebook-f {
+  padding: 5px 8px !important;
+}
+footer .social-links .fa-youtube-play {
+  padding: 5px 4px !important;
+}
+footer .social-links .fa-instagram {
+  padding: 5px 6px !important;
+  color: transparent;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  background: -webkit-radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+footer .social-links .fa-linkedin {
+  color: #0073b0;
+}
+.footer-xs {
+  text-align: center;
+  padding-top: 1rem;
+}
 
+@media (max-width: 600px) {
+  footer .footer{
+    display: block !important;
+  }
+}
 /*************** ------------------- Footer style end--------------- ***************/
